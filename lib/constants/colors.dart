@@ -4,6 +4,8 @@ class AppColors {
   // اللون الأساسي
   static const Color primaryColor = Color(0xFF00AFB4);
 
+  //لون الاطار
+  static const Color borderColor = Color(0xFF3B3B3B);
   // لون الحقول والبطاقات
   static const Color fieldBackgroundColor = Color(0xFFF2F6FD);
 

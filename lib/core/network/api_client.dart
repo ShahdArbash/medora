@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:medoraapp/core/error/api_exception.dart';
@@ -27,7 +26,9 @@ class ApiClient {
     _addInterceptors();
   }
 
-  static const String _baseUrl = "http://192.168.1.118:8000/api/";
+  static const String _baseUrl = "http://192.168.144.128:8000/api/";
+  // static const String _baseUrl = "http://192.168.1.105:8000/api/";
+  // static const String _baseUrl = "http://10.114.113.128:8000/api/";
 
   void _addInterceptors() {
     // 🔐 Token + Network Check
@@ -56,52 +57,6 @@ class ApiClient {
       ),
     );
 
-    // 🔁 Retry interceptor
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (error, handler) async {
-          if (_shouldRetry(error)) {
-            try {
-              final response = await _retry(error.requestOptions);
-              return handler.resolve(response);
-            } catch (e) {
-              return handler.next(error);
-            }
-          }
-          handler.next(error);
-        },
-      ),
-    );
-
-    // 🔄 Refresh Token
-    dio.interceptors.add(
-      InterceptorsWrapper(
-        onError: (error, handler) async {
-          if (error.response?.statusCode == 401) {
-            final newToken = await _refreshToken();
-
-            if (newToken != null) {
-              await TokenStorage.saveTokens(
-                accessToken: newToken,
-                // refreshToken: await TokenStorage.getRefreshToken() ?? '',
-              );
-
-              error.requestOptions.headers['Authorization'] =
-                  'Bearer $newToken';
-
-              final response = await dio.fetch(
-                error.requestOptions,
-              ); // retry request
-
-              return handler.resolve(response);
-            }
-          }
-
-          handler.next(error);
-        },
-      ),
-    );
-
     // 🧠 تحويل الأخطاء
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -112,7 +67,7 @@ class ApiClient {
             requestOptions: error.requestOptions,
             response: error.response,
             type: error.type,
-            error: apiException, // 👈 هون السر
+            error: apiException,
           );
 
           handler.next(newError);
@@ -125,32 +80,6 @@ class ApiClient {
       dio.interceptors.add(
         LogInterceptor(requestBody: true, responseBody: true),
       );
-    }
-  }
-
-  // 🔁 Retry logic
-  bool _shouldRetry(DioException error) {
-    return error.type == DioExceptionType.connectionError ||
-        error.type == DioExceptionType.receiveTimeout;
-  }
-
-  Future<Response> _retry(RequestOptions requestOptions) async {
-    return dio.fetch(requestOptions);
-  }
-
-  // 🔄 Refresh token logic (تعدلي endpoint حسب الباك)
-  Future<String?> _refreshToken() async {
-    try {
-      final refreshToken = await TokenStorage.getRefreshToken();
-
-      final response = await dio.post(
-        "refresh-token",
-        data: {"refresh_token": refreshToken},
-      );
-
-      return response.data["access_token"];
-    } catch (e) {
-      return null;
     }
   }
 

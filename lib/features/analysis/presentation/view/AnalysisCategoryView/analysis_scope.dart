@@ -16,7 +16,7 @@ class AnalysisScopeView extends StatelessWidget {
         create: (context) => AnalysisCategoryCubit(
           service: context.read<AnalysisCategoryService>(),
         ),
-        child: const AnalysisCategoriesView(),
+        child: AnalysisCategoriesView(),
       ),
     );
   }

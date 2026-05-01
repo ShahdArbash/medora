@@ -12,6 +12,8 @@ class AnalysisSuccess extends AnalysisState {
   AnalysisSuccess(this.analyses);
 }
 
+class AnalysisEmpty extends AnalysisState {}
+
 class AnalysisError extends AnalysisState {
   final String message;
 

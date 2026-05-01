@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:medoraapp/core/theme/app_theme.dart';
+import 'package:medoraapp/features/auth/data/services/api_service.dart';
+import 'package:medoraapp/features/auth/data/services/auth_repository.dart';
+import 'package:medoraapp/features/auth/data/services/auth_service.dart';
 import 'package:medoraapp/l10n/app_localizations.dart';
-import 'package:medoraapp/presentation/views/home_view.dart';
 import 'package:medoraapp/presentation/views/splash_view.dart';
 
 void main() {
-  runApp(const MedoraAPP());
+  final apiService = ApiService();
+  final authService = AuthService(apiService);
+  final authRepository = AuthRepository(authService);
+
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: apiService),
+        RepositoryProvider.value(value: authService),
+        RepositoryProvider.value(value: authRepository),
+      ],
+      child: const MedoraAPP(),
+    ),
+  );
 }
 
 class MedoraAPP extends StatelessWidget {

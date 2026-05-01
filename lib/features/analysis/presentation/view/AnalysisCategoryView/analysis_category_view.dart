@@ -16,27 +16,26 @@ class AnalysisCategoriesView extends StatefulWidget {
 class _AnalysisCategoriesViewState extends State<AnalysisCategoriesView>
     with AutomaticKeepAliveClientMixin {
   @override
-  bool get wantKeepAlive => true; // 👈 هذا مهم جداً
-
+  bool get wantKeepAlive => true;
   @override
   void initState() {
     super.initState();
+
     context.read<AnalysisCategoryCubit>().getCategories();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // 👈 ضروري
+    super.build(context);
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           scrolledUnderElevation: 0,
-          title: Center(
-            child: Text(
-              "أسعار التحاليل",
-              style: CairoFonts.bold(fontSize: 20),
-              textAlign: TextAlign.center,
-            ),
+          title: Text(
+            "أسعار التحاليل",
+            style: CairoFonts.bold(fontSize: 20),
+            textAlign: TextAlign.center,
           ),
         ),
 

@@ -28,18 +28,22 @@ class AppCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
       title: Padding(
         padding: const EdgeInsets.only(top: 23),
-        child: Row(
+        child: Column(
           children: [
-            Expanded(
-              child: Text(
-                title,
-                style: CairoFonts.bold(fontSize: 15),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    title,
+                    style: CairoFonts.bold(fontSize: 15),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
 
-            /// 👇 أي Widget (Badge - Icon - Text)
-            if (trailing != null) ...[const SizedBox(width: 8), trailing!],
+                /// 👇 أي Widget (Badge - Icon - Text)
+                if (trailing != null) ...[const SizedBox(width: 8), trailing!],
+              ],
+            ),
           ],
         ),
       ),

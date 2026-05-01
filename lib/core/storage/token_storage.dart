@@ -6,7 +6,7 @@ class TokenStorage {
   static const _accessTokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';
 
-  // 🔐 حفظ التوكنات
+  //  حفظ التوكنات
   static Future<void> saveTokens({
     required String accessToken,
     // required String refreshToken,
@@ -15,26 +15,24 @@ class TokenStorage {
     // await _storage.write(key: _refreshTokenKey, value: refreshToken);
   }
 
-  // 🔑 جلب access token
+  //  جلب access token
   static Future<String?> getToken() async {
     return await _storage.read(key: _accessTokenKey);
   }
 
-  // 🔄 جلب refresh token
-  static Future<String?> getRefreshToken() async {
-    return await _storage.read(key: _refreshTokenKey);
-  }
-
-  // 🚪 تسجيل خروج
+  //  تسجيل خروج
   static Future<void> clearAll() async {
     await _storage.delete(key: _accessTokenKey);
     await _storage.delete(key: _refreshTokenKey);
   }
 
-  // ✅ هل المستخدم مسجل؟
+  //هل المستخدم مسجل
   static Future<bool> isLoggedIn() async {
     final token = await _storage.read(key: _accessTokenKey);
-    return token != null;
+
+    if (token == null) return false;
+
+    return true;
   }
 
   static Future<void> clearAccessToken() async {

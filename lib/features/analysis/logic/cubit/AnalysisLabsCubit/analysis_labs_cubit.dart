@@ -9,6 +9,7 @@ class AnalysisLabsCubit extends Cubit<AnalysisLabsState> {
   AnalysisLabsCubit(this.service) : super(AnalysisLabsInitial());
 
   Future<void> getLabs(int analysisId) async {
+    if (isClosed) return;
     emit(AnalysisLabsLoading());
 
     try {
@@ -21,7 +22,7 @@ class AnalysisLabsCubit extends Cubit<AnalysisLabsState> {
           AnalysisLabsLoaded(
             response.labs,
             response.totalCount,
-            response.filteredCount, // 👈 رح نضيفها
+            response.filteredCount,
           ),
         );
       }

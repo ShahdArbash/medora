@@ -16,16 +16,16 @@ class LoginResponseModel {
   });
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    final data = json['data'] ?? {};
-    final userJson = data['user'] ?? {};
-    final authJson = data['authorisation'] ?? {};
+    final data = json['data'] as Map<String, dynamic>? ?? {};
+    final userJson = data['user'] as Map<String, dynamic>? ?? {};
+    final authJson = data['authorisation'] as Map<String, dynamic>? ?? {};
 
     return LoginResponseModel(
       status: json['status'] ?? '',
       message: json['message'] ?? '',
       user: UserModel.fromJson(userJson),
       token: authJson['token'] ?? '',
-      tokenType: authJson['type'],
+      tokenType: authJson['type'] ?? 'bearer',
     );
   }
 

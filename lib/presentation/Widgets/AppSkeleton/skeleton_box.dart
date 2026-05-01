@@ -18,7 +18,7 @@ class SkeletonBox extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: Colors.white, // 👈 مهم مع shimmer
+        color: Colors.white,
         borderRadius: BorderRadius.circular(radius),
       ),
     );

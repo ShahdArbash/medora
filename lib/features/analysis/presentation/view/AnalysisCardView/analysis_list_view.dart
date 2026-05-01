@@ -9,7 +9,6 @@ import 'package:medoraapp/features/analysis/presentation/widgets/AnalysisCard/co
 import 'package:medoraapp/features/analysis/presentation/widgets/AnalysisCard/analysis_card.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/AnalysisCard/search_field.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/app_custom_app_bar.dart';
-import 'package:medoraapp/presentation/Widgets/AppSkeleton/search_skeleton.dart';
 
 class AnalysisListView extends StatelessWidget {
   final AnalysisCategoryModel category;
@@ -50,6 +49,9 @@ class AnalysisListView extends StatelessWidget {
                   if (state is AnalysisError) {
                     return Center(child: Text(state.message));
                   }
+                  if (state is AnalysisEmpty) {
+                    return Center(child: Text("لا يوجد تحاليل"));
+                  }
 
                   if (state is AnalysisSuccess) {
                     return ListView.builder(
@@ -58,16 +60,13 @@ class AnalysisListView extends StatelessWidget {
                         final item = state.analyses[index];
 
                         return AnalysisCard(
-                          title: item.name,
-                          subtitle: item.description,
+                          analysis: item,
                           onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => AnalysisLabsScopeView(
-                                  analysisId: item.id,
-                                  analysisName: item.name,
-                                ),
+                                builder: (_) =>
+                                    AnalysisLabsScopeView(analysis: item),
                               ),
                             );
                           },

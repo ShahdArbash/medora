@@ -25,7 +25,7 @@ class AnalysisCategoryGrid extends StatelessWidget {
         crossAxisCount: getCrossAxisCount(),
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 1,
+        childAspectRatio: width > 600 ? 1.1 : 0.9,
       ),
       itemBuilder: (context, index) {
         final category = categories[index];

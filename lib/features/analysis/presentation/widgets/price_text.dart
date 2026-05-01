@@ -26,7 +26,7 @@ class PriceText extends StatelessWidget {
         const SizedBox(width: 6),
 
         Text(
-          "$price دولار",
+          "$price ل.س",
           style: CairoFonts.bold(color: AppColors.primaryColor),
         ),
       ],

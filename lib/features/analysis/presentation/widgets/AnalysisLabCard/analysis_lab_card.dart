@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:medoraapp/features/analysis/data/models/booking_data.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/app_card_base.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/app_info_row.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/app_primary_button.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/offer_badge.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/price_text.dart';
-import 'package:medoraapp/features/appointment/presentation/view/book_appointment_view.dart';
 import '../../../../../constants/fonts.dart';
 import '../../../data/models/analysis_lab_model.dart';
 
@@ -27,7 +25,6 @@ class AnalysisLabCard extends StatelessWidget {
       top: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// 🔥 السطر الأول (العرض + اسم المخبر)
           Row(
             children: [
               Expanded(
@@ -39,14 +36,14 @@ class AnalysisLabCard extends StatelessWidget {
 
           const SizedBox(height: 8),
 
-          /// 📍 الموقع
+          ///  الموقع
           AppInfoRow(icon: Icons.location_on, text: lab.location),
 
           const SizedBox(height: 8),
 
           Row(
             children: [
-              /// ⏱️ المدة
+              ///  المدة
               AppInfoRow(
                 icon: Icons.access_time,
                 text: "مدة التسليم: ${lab.duration}",

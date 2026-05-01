@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:medoraapp/constants/colors.dart';
 import 'package:medoraapp/constants/fonts.dart';
+import 'package:medoraapp/features/analysis/data/models/analysis_model.dart';
 import 'package:medoraapp/features/analysis/presentation/widgets/app_card_base.dart';
 
 class AnalysisCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
+  final AnalysisModel analysis;
   final VoidCallback? onTap;
 
-  const AnalysisCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    this.onTap,
-  });
+  const AnalysisCard({super.key, required this.analysis, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +16,12 @@ class AnalysisCard extends StatelessWidget {
       top: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: CairoFonts.bold(fontSize: 14)),
+          Text(
+            '${analysis.name} (${analysis.shortName})',
+            style: CairoFonts.bold(fontSize: 14),
+          ),
           const SizedBox(height: 4),
-          Text(subtitle, style: CairoFonts.semiBold(fontSize: 12)),
+          Text(analysis.description, style: CairoFonts.semiBold(fontSize: 12)),
         ],
       ),
 

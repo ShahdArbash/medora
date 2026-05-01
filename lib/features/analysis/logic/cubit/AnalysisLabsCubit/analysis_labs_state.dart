@@ -9,7 +9,7 @@ class AnalysisLabsLoading extends AnalysisLabsState {}
 class AnalysisLabsLoaded extends AnalysisLabsState {
   final List<AnalysisLabModel> labs;
   final int totalCount;
-  final int filteredCount; // 👈 جديد
+  final int filteredCount;
 
   AnalysisLabsLoaded(this.labs, this.totalCount, this.filteredCount);
 }
