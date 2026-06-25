@@ -28,4 +28,8 @@ class AppColors {
   static const Color scaffoldBackgroundColorChat = Color(0xFFF5F5F5);
   static const Color botMessageBubbleColor = Color(0xFFE47519);
   static const Color backgroundtextfildeChatColor = Color(0xFFEDF8F9);
+
+  //صفحة البروفايل
+  static const Color goldColor = Color(0xffC4A139);
+  static const Color onGoldColor = Color(0xff5F4113);
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:medoraapp/features/booking/data/models/time_model.dart';
+import 'package:medoraapp/features/booking/data/models/View%20Model/time_model.dart';
 import 'package:medoraapp/features/booking/presentation/utils/time_utils.dart';
-import 'package:medoraapp/features/booking/presentation/widgets/time_section.dart';
+import 'package:medoraapp/features/booking/presentation/widgets/Appointment/time_section.dart';
 
 class TimeGrid extends StatelessWidget {
   final List<TimeModel> times;

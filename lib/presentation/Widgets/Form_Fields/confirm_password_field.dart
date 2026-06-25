@@ -22,7 +22,7 @@ class ConfirmPasswordField extends StatelessWidget {
 
       validator: validator,
 
-      labelText: AppLocalizations.of(context)!.confirmPassword,
+      hintText: AppLocalizations.of(context)!.confirmPassword,
     );
   }
 }

@@ -19,7 +19,7 @@ class EmailField extends StatelessWidget {
     return BuildTextFormField(
       controller: controller,
       focusNode: focusNode,
-      labelText: AppLocalizations.of(context)!.email,
+      hintText: AppLocalizations.of(context)!.email,
       icon: Icons.email_outlined,
       keyboardType: TextInputType.emailAddress,
       validator: validator,

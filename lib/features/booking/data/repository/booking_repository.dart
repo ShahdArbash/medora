@@ -1,5 +1,8 @@
-import 'package:medoraapp/features/booking/data/models/booking_request.dart';
-import 'package:medoraapp/features/booking/data/models/time_model.dart';
+import 'package:dio/dio.dart';
+import 'package:medoraapp/core/error/api_exception.dart';
+import 'package:medoraapp/features/booking/data/models/Request%20Model/booking_api_request.dart';
+import 'package:medoraapp/features/booking/data/models/Request%20Model/booking_request.dart';
+import 'package:medoraapp/features/booking/data/models/View%20Model/time_model.dart';
 import 'package:medoraapp/features/booking/data/service/booking_service.dart';
 
 class BookingRepository {
@@ -11,12 +14,12 @@ class BookingRepository {
     return service.fetchTimes(labId: labId, date: date);
   }
 
-  Future<void> bookAppointment(BookingRequest request) {
-    return service.bookAppointment(
-      labId: request.labId,
-      analysisId: request.analysisId,
-      date: request.date!,
-      time: request.time!,
-    );
+  Future<void> bookAppointment(BookingRequest request) async {
+    try {
+      final apiRequest = BookingApiRequest.fromRequest(request);
+      await service.bookAppointment(apiRequest);
+    } on DioException catch (e) {
+      throw ApiException.fromResponse(e.response?.statusCode, e.response?.data);
+    }
   }
 }

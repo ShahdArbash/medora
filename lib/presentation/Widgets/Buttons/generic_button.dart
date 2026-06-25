@@ -14,6 +14,7 @@ class GenericButton extends StatelessWidget {
   final bool isLoading;
   final bool hasBorder;
   final Color borderColor;
+  final bool hasShadow;
 
   const GenericButton({
     super.key,
@@ -28,6 +29,7 @@ class GenericButton extends StatelessWidget {
     this.isLoading = false,
     this.hasBorder = false,
     this.borderColor = Colors.grey,
+    this.hasShadow = true,
   });
 
   @override
@@ -44,11 +46,16 @@ class GenericButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: disabled ? null : onPressed,
             style: ElevatedButton.styleFrom(
+              shadowColor: hasShadow
+                  ? Colors.black.withValues(alpha: 0.2)
+                  : Colors.transparent,
               backgroundColor: disabled
                   ? backgroundColor.withValues(alpha: 0.5)
                   : backgroundColor,
+
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
+
                 side: hasBorder
                     ? BorderSide(color: borderColor, width: 1)
                     : BorderSide.none,

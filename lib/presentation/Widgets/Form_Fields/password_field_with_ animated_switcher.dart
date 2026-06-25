@@ -52,7 +52,7 @@ class _PasswordFieldWithRulesState extends State<PasswordFieldWithRules> {
           validator: widget.validator,
           onChanged: (value) => _password.value = value,
 
-          labelText: AppLocalizations.of(context)!.password,
+          hintText: AppLocalizations.of(context)!.password,
         ),
 
         const SizedBox(height: 8),

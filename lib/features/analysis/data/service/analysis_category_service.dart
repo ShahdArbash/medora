@@ -8,7 +8,7 @@ class AnalysisCategoryService {
 
   Future<List<AnalysisCategoryModel>> fetchCategories() async {
     try {
-      final response = await apiClient.dio.get("categories");
+      final response = await apiClient.client.get("categories");
 
       final List data = response.data['data'];
 

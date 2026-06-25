@@ -8,12 +8,13 @@ class AnalysisLabsCubit extends Cubit<AnalysisLabsState> {
 
   AnalysisLabsCubit(this.service) : super(AnalysisLabsInitial());
 
-  Future<void> getLabs(int analysisId) async {
+  Future<void> getLabs(int analysisId, {String sortBy = "price"}) async {
     if (isClosed) return;
+
     emit(AnalysisLabsLoading());
 
     try {
-      final response = await service.fetchLabs(analysisId);
+      final response = await service.fetchSortedLabs(analysisId, sortBy);
 
       if (response.labs.isEmpty) {
         emit(AnalysisLabsEmpty());

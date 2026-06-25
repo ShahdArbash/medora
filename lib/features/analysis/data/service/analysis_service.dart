@@ -6,9 +6,38 @@ import '../models/analysis_model.dart';
 class AnalysisService {
   final ApiClient apiClient = ApiClient();
 
+  Future<List<AnalysisModel>> fetchAllAnalyses() async {
+    try {
+      final response = await apiClient.client.get("admin/master-tests");
+
+      final List data = response.data['data'];
+
+      return data.map((e) => AnalysisModel.fromJson(e)).toList();
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        throw const ApiException(type: ApiExceptionType.network);
+      }
+
+      if (e.response != null) {
+        throw ApiException(
+          type: ApiExceptionType.server,
+          statusCode: e.response?.statusCode,
+          serverMessage: e.response?.data["message"],
+        );
+      }
+
+      throw const ApiException(type: ApiExceptionType.unknown);
+    } catch (_) {
+      throw const ApiException(type: ApiExceptionType.unknown);
+    }
+  }
+
   Future<List<AnalysisModel>> fetchAnalysesByCategory(int categoryId) async {
     try {
-      final response = await apiClient.dio.get("get-test-category/$categoryId");
+      final response = await apiClient.client.get(
+        "get-test-category/$categoryId",
+      );
 
       final List data = response.data['data'];
 

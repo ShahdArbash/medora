@@ -19,7 +19,7 @@ class PasswordField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BasePasswordField(
       focusNode: focusNode,
-      labelText: AppLocalizations.of(context)!.password,
+      hintText: AppLocalizations.of(context)!.password,
       controller: controller,
       validator: (value) => passwordValidator(value, context),
       onChanged: onChanged,

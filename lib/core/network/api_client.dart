@@ -25,18 +25,15 @@ class ApiClient {
 
     _addInterceptors();
   }
-
-  static const String _baseUrl = "http://192.168.144.128:8000/api/";
-  // static const String _baseUrl = "http://192.168.1.105:8000/api/";
-  // static const String _baseUrl = "http://10.114.113.128:8000/api/";
+  static const String _baseUrl =
+      "https://legacy-cubical-swampland.ngrok-free.dev/api/";
 
   void _addInterceptors() {
-    // 🔐 Token + Network Check
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // 🌐 check internet
           final connectivity = await Connectivity().checkConnectivity();
+
           if (connectivity == ConnectivityResult.none) {
             return handler.reject(
               DioException(
@@ -46,7 +43,6 @@ class ApiClient {
             );
           }
 
-          // 🔑 add token
           final token = await TokenStorage.getToken();
           if (token != null) {
             options.headers['Authorization'] = 'Bearer $token';
@@ -57,25 +53,23 @@ class ApiClient {
       ),
     );
 
-    // 🧠 تحويل الأخطاء
     dio.interceptors.add(
       InterceptorsWrapper(
         onError: (error, handler) {
           final apiException = _mapToApiException(error);
 
-          final newError = DioException(
-            requestOptions: error.requestOptions,
-            response: error.response,
-            type: error.type,
-            error: apiException,
+          handler.next(
+            DioException(
+              requestOptions: error.requestOptions,
+              response: error.response,
+              type: error.type,
+              error: apiException,
+            ),
           );
-
-          handler.next(newError);
         },
       ),
     );
 
-    // 🐞 Logging
     if (kDebugMode) {
       dio.interceptors.add(
         LogInterceptor(requestBody: true, responseBody: true),
@@ -94,8 +88,27 @@ class ApiClient {
     }
 
     final statusCode = e.response?.statusCode;
-    final message = e.response?.data?['message'];
+    final data = e.response?.data;
 
-    return ApiException.fromStatusCode(statusCode, message);
+    String? message;
+    Map<String, dynamic>? errors;
+
+    if (data is Map) {
+      // 🔥 Laravel validation errors
+      if (data['errors'] is Map) {
+        errors = Map<String, dynamic>.from(data['errors']);
+      }
+
+      // 🔥 fallback (your current backend style)
+      if (data['data'] is List && data['data'].isNotEmpty) {
+        message = data['data'][0];
+      } else if (data['message'] is String) {
+        message = data['message'];
+      }
+    }
+
+    return ApiException.fromStatusCode(statusCode, message, errors);
   }
+
+  Dio get client => dio;
 }

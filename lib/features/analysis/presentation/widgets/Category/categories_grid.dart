@@ -35,12 +35,7 @@ class AnalysisCategoryGrid extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (_) => AnalysisListScopeView(
-                  categoryId: category.id,
-                  category: category,
-                ),
-              ),
+              MaterialPageRoute(builder: (_) => AnalysisListScopeView()),
             );
           },
         );

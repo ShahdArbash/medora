@@ -8,6 +8,20 @@ class AnalysisCubit extends Cubit<AnalysisState> {
 
   AnalysisCubit(this.service) : super(AnalysisInitial());
 
+  Future<void> fetchAllAnalyses() async {
+    emit(AnalysisLoading());
+
+    try {
+      final analyses = await service.fetchAllAnalyses();
+
+      emit(AnalysisSuccess(analyses));
+    } on ApiException catch (e) {
+      emit(AnalysisError(e.userMessage));
+    } catch (_) {
+      emit(AnalysisError("Something went wrong"));
+    }
+  }
+
   Future<void> fetchAnalyses(int categoryId) async {
     emit(AnalysisLoading());
 

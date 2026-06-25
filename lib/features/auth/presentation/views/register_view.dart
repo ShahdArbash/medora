@@ -7,8 +7,6 @@ import 'package:medoraapp/core/validators/password_validator.dart';
 import 'package:medoraapp/features/auth/data/models/register_request.dart';
 import 'package:medoraapp/features/auth/logic/Cubits/cubit_register/register_cubit.dart';
 import 'package:medoraapp/features/auth/logic/Cubits/cubit_register/register_state.dart';
-import 'package:medoraapp/features/auth/presentation/views/login_scope_view.dart';
-import 'package:medoraapp/features/auth/presentation/views/login_view.dart';
 import 'package:medoraapp/features/auth/presentation/views/otp_scope_view.dart';
 import 'package:medoraapp/features/auth/presentation/views/otp_view.dart';
 import 'package:medoraapp/l10n/app_localizations.dart';

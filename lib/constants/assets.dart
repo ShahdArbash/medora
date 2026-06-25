@@ -8,7 +8,8 @@ class Assets {
 
   /// Assets for chatBotBlueRobotIcon
   /// assets/chat_bot/blue-robot-icon.png
-  static const String chatBotBlueRobotIcon = "assets/chat_bot/blue-robot-icon.png";
+  static const String chatBotBlueRobotIcon =
+      "assets/chat_bot/blue-robot-icon.png";
 
   /// Assets for chatBotEdit2
   /// assets/chat_bot/edit-2.png
@@ -53,6 +54,12 @@ class Assets {
   /// Assets for profile
   /// assets/profile.jpg
   static const String profile = "assets/profile.jpg";
+  static const String edit = "assets/edit.svg";
+  static const String appointment = "assets/appointment.svg";
+
+  static const String analysis = "assets/analysis.svg";
+  static const String home = "assets/home.svg";
+  static const String help = "assets/help.svg";
 
   /// Assets for test1
   /// assets/test/1.jpg

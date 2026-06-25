@@ -1,4 +1,4 @@
-import '../../data/models/time_model.dart';
+import '../../data/models/View Model/time_model.dart';
 
 Map<String, List<TimeModel>> groupTimes(List<TimeModel> times) {
   final Map<String, List<TimeModel>> groups = {

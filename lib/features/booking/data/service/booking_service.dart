@@ -1,14 +1,15 @@
 import 'package:medoraapp/core/network/api_client.dart';
-import 'package:medoraapp/features/booking/data/models/appointments_response.dart';
-import 'package:medoraapp/features/booking/data/models/time_model.dart';
+import 'package:medoraapp/features/booking/data/models/View%20Model/appointments_response.dart';
+import 'package:medoraapp/features/booking/data/models/Request%20Model/booking_api_request.dart';
+import 'package:medoraapp/features/booking/data/models/View%20Model/time_model.dart';
 
 class BookingService {
-  final _dio = ApiClient().dio;
+  final apiClient = ApiClient().dio;
   static const bool useMock = true;
 
   ///  جلب المواعيد (Upcoming / Past)
   Future<AppointmentsResponse> getAppointments() async {
-    final response = await _dio.get("appointments");
+    final response = await apiClient.get("appointments");
     return AppointmentsResponse.fromJson(response.data);
   }
 
@@ -16,7 +17,7 @@ class BookingService {
     required int labId,
     required String date,
   }) async {
-    final response = await _dio.get(
+    final response = await apiClient.get(
       "laboratories/$labId/slots",
       queryParameters: {"date": date},
     );
@@ -26,20 +27,7 @@ class BookingService {
     return data.map((e) => TimeModel.fromJson(e)).toList();
   }
 
-  Future<void> bookAppointment({
-    required int labId,
-    required int analysisId,
-    required String date,
-    required String time,
-  }) async {
-    await _dio.post(
-      "appointments",
-      data: {
-        "lab_id": labId,
-        "analysis_id": analysisId,
-        "date": date,
-        "time": time,
-      },
-    );
+  Future<void> bookAppointment(BookingApiRequest request) async {
+    await apiClient.post("appointments", data: request.toJson());
   }
 }

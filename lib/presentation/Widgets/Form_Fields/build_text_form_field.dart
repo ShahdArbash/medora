@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class BuildTextFormField extends StatelessWidget {
   const BuildTextFormField({
     super.key,
-    required this.labelText,
+    this.labelText,
+    this.hintText,
     required this.icon,
     this.obscurePassword = false,
     this.keyboardType,
@@ -15,12 +16,14 @@ class BuildTextFormField extends StatelessWidget {
     this.focusNode,
     this.showErrorNotifier,
     this.controller,
+    this.showValidationState = true,
   });
-  final TextInputType? keyboardType;
 
-  final String labelText;
+  final String? labelText;
+  final String? hintText;
   final IconData icon;
   final bool obscurePassword;
+  final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final Widget? suffixIcon;
@@ -29,37 +32,47 @@ class BuildTextFormField extends StatelessWidget {
   final FocusNode? focusNode;
   final ValueNotifier<bool>? showErrorNotifier;
   final TextEditingController? controller;
+  final bool showValidationState;
 
   @override
   Widget build(BuildContext context) {
     final isRTL = Directionality.of(context) == TextDirection.rtl;
 
     Widget buildTextField(String? error, bool showError) {
-      final borderColor = error != null && error.isNotEmpty && showError
+      final hasText = controller?.text.trim().isNotEmpty ?? false;
+
+      final borderColor =
+          showValidationState && error != null && error.isNotEmpty && showError
           ? Colors.red
-          : (controller != null && controller!.text.isNotEmpty && error == null)
+          : showValidationState && hasText && error == null
           ? Colors.green
           : Colors.grey.shade300;
 
-      final suffixIconWithState = error != null && error.isNotEmpty && showError
+      final suffixIconWithState =
+          showValidationState && error != null && error.isNotEmpty && showError
           ? const Icon(Icons.error, color: Colors.red)
-          : (controller != null && controller!.text.isNotEmpty && error == null)
+          : showValidationState && hasText && error == null
           ? const Icon(Icons.check, color: Colors.green)
           : suffixIcon;
 
       return TextFormField(
-        keyboardType: keyboardType,
         controller: controller,
+        keyboardType: keyboardType,
         focusNode: focusNode,
         obscureText: obscurePassword,
         textAlign: TextAlign.start,
+        validator: validator,
+        onSaved: onSaved,
+        onChanged: onChanged,
 
         style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
 
-        onChanged: onChanged,
-
         decoration: InputDecoration(
-          hintText: labelText,
+          labelText: labelText,
+          hintText: hintText,
+
+          labelStyle: const TextStyle(fontSize: 14),
+
           hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
 
           floatingLabelStyle: TextStyle(
@@ -68,8 +81,8 @@ class BuildTextFormField extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
 
-          // RTL / LTR
           prefixIcon: isRTL ? null : Icon(icon),
+
           suffixIcon: isRTL
               ? (suffixIconWithState ?? Icon(icon))
               : suffixIconWithState,
@@ -77,6 +90,11 @@ class BuildTextFormField extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(color: borderColor),
+          ),
+
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(color: borderColor, width: 1.5),
           ),
 
           errorBorder: OutlineInputBorder(
@@ -89,16 +107,9 @@ class BuildTextFormField extends StatelessWidget {
             borderSide: const BorderSide(color: Colors.red, width: 1.5),
           ),
 
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(color: borderColor, width: 1.5),
-          ),
-
           filled: true,
           fillColor: Colors.grey.shade50,
         ),
-        validator: validator,
-        onSaved: onSaved,
       );
     }
 
@@ -113,7 +124,11 @@ class BuildTextFormField extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildTextField(error, showError),
-                  if (error != null && error.isNotEmpty && showError)
+
+                  if (error != null &&
+                      error.isNotEmpty &&
+                      showError &&
+                      showValidationState)
                     Padding(
                       padding: const EdgeInsets.only(top: 4, left: 12),
                       child: Text(
@@ -127,8 +142,8 @@ class BuildTextFormField extends StatelessWidget {
           );
         },
       );
-    } else {
-      return buildTextField(null, false);
     }
+
+    return buildTextField(null, false);
   }
 }

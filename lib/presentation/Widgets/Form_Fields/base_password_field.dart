@@ -4,7 +4,7 @@ import 'build_text_form_field.dart';
 class BasePasswordField extends StatefulWidget {
   const BasePasswordField({
     super.key,
-    required this.labelText,
+    required this.hintText,
     required this.validator,
     this.icon,
 
@@ -15,7 +15,7 @@ class BasePasswordField extends StatefulWidget {
     this.controller,
   });
 
-  final String labelText;
+  final String hintText;
   final String? Function(String?) validator;
   final IconData? icon;
   final FocusNode? focusNode;
@@ -40,7 +40,7 @@ class _BasePasswordFieldState extends State<BasePasswordField> {
   @override
   Widget build(BuildContext context) {
     return BuildTextFormField(
-      labelText: widget.labelText,
+      hintText: widget.hintText,
       icon: widget.icon ?? Icons.lock_outline,
       obscurePassword: _obscurePassword,
       validator: widget.validator,

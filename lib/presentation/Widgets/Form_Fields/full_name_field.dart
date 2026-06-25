@@ -18,7 +18,7 @@ class FullNameField extends StatelessWidget {
       controller: controller,
       validator: validator,
 
-      labelText: AppLocalizations.of(context)!.fullName,
+      hintText: AppLocalizations.of(context)!.fullName,
       icon: Icons.person_2_outlined,
     );
   }

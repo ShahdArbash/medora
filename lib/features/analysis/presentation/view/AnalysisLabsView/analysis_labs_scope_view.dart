@@ -17,7 +17,7 @@ class AnalysisLabsScopeView extends StatelessWidget {
         create: (context) =>
             AnalysisLabsCubit(context.read<AnalysisLabsService>())
               ..getLabs(analysis.id),
-        child: AnalysisLabsView(title: analysis.name),
+        child: AnalysisLabsView(analysis: analysis),
       ),
     );
   }
