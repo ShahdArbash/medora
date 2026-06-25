@@ -1,4 +1,4 @@
-Medora App
+<!-- Medora App
 
 A modern Flutter application built with clean architecture, BLoC state management, and a strong focus on user experience.
 The app features a home screen with promotional sliders, user profiles, authentication flows, and reusable UI components.
@@ -309,4 +309,4 @@ Flutter team
 
 BLoC library maintainers
 
-Open-source contributors
+Open-source contributors -->
